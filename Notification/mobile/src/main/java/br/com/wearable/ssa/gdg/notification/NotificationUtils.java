@@ -14,7 +14,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 
 /**
- * Created by ramon on 23/09/15.
+ * Created by ramon .
  */
 public class NotificationUtils {
 
@@ -179,16 +179,16 @@ public class NotificationUtils {
     /**
      * Criar notificação com Resposta por comando de voz (Recurso exclusivo do Android Wear)
      * @param ctx
-     * @param idNotificao
+     * @param idNotificacao
      */
-    public static void criarNotificacaoComResposta(Context ctx, int idNotificao){
+    public static void criarNotificacaoComResposta(Context ctx, int idNotificacao){
 
         // Permite adicionar o comando de voz a notificação
         RemoteInput remoteInput = new RemoteInput.Builder(DetalheActivity.EXTRA_RESPOSTA_VOZ)
                 .setLabel("Diga a Resposta")
                 .build();
         // Define a intent para abrir a activity de detalhe
-        PendingIntent pit = criarPendingIntent(ctx, "Notificação com Resposta", idNotificao);
+        PendingIntent pit = criarPendingIntent(ctx, "Notificação com Resposta", idNotificacao);
         // Define a ação que enviara a texto para a tela detalhe
         NotificationCompat.Action action = new NotificationCompat.Action.Builder(
                 R.drawable.ic_notificacao, "Responder", pit)
@@ -215,7 +215,50 @@ public class NotificationUtils {
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(ctx);
         // Enviar a notificação
-        nm.notify(idNotificao, notificacao);
+        nm.notify(idNotificacao, notificacao);
+
+    }
+
+    /**
+     * Cria uma notificação com duas páginas
+     * @param ctx
+     * @param idNotificacao
+     */
+    public static void criarNotificacaoComPaginas(Context ctx, int idNotificacao){
+        PendingIntent pit = criarPendingIntent(ctx, "Notificação com páginas", idNotificacao);
+
+        NotificationCompat.Builder notificacaoPrincipal = new NotificationCompat.Builder(ctx)
+                // Define o ícone
+                .setSmallIcon(R.drawable.ic_notificacao)
+                // Define o texto principal da notificação (Obrigatório)
+                .setContentTitle("Com páginas")
+                // Texto que aparecerá abaixo do título (obrigatório)
+                .setContentText("Essa é a primeira página")
+                // Define se a notificação será removida  automaticamente ao ser clicada
+                .setAutoCancel(true)
+                // Define intent para abrir a Detalhe Activity
+                .setContentIntent(pit)
+                .setDefaults(NotificationCompat.DEFAULT_ALL);
+
+                // Estilo para notifições grandes
+                NotificationCompat.BigTextStyle estiloDePagina = new NotificationCompat.BigTextStyle()
+                        .setBigContentTitle("Segunda página")
+                        .bigText("Um texto qualquer que você queira colocar na segunda página");
+
+                // Cria a notificação da segunda página, com estilo definido anteriormente
+                Notification notificationPag2 = new NotificationCompat.Builder(ctx)
+                        .setStyle(estiloDePagina)
+                        .build();
+
+                // Cria a notificação com as duas páginas criadas
+                Notification notificationCom2Paginas = new NotificationCompat.WearableExtender()
+                        .addPage(notificationPag2)
+                        .extend(notificacaoPrincipal)
+                        .build();
+
+                NotificationManagerCompat nm = NotificationManagerCompat.from(ctx);
+                // Enviar a notificação
+                nm.notify(idNotificacao, notificationCom2Paginas);
 
     }
 

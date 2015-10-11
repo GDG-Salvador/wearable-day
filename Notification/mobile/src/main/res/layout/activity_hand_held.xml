@@ -5,6 +5,7 @@
     android:padding="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     tools:context=".HandHeldActivity">
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +36,12 @@
         android:id="@+id/button4"
         android:onClick="criarNotificacaoComResposta"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notificação com Páginas"
+        android:id="@+id/button5"
+        android:onClick="criarNotificacaoComPaginas"/>
 
 </LinearLayout>
 

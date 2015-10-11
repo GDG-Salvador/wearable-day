@@ -17,9 +17,10 @@ public class HandHeldActivity extends Activity {
     private static final int NOTIFICACAO_COMPLETA = 2;
     private static final int NOTIFICACAO_GRANDE = 3;
     private static final int NOTIFICACAO_RESPOSTA = 4;
-
+    private static final int NOTIFICACAO_COM_PAGINAS = 5;
     EditText  mEdtTexto;
     MeuReceiver mReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +81,14 @@ public class HandHeldActivity extends Activity {
      */
     public void criarNotificacaoComResposta(View v){
         NotificationUtils.criarNotificacaoComResposta(this, NOTIFICACAO_RESPOSTA);
+    }
+
+    /**
+     * Cria notificação com paginas
+     * @param v
+     */
+    public void criarNotificacaoComPaginas(View v){
+        NotificationUtils.criarNotificacaoComPaginas(this, NOTIFICACAO_COM_PAGINAS);
     }
 
     /**
